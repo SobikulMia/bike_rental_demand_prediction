@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bike Rental Prediction - Full Feature Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: #fff;
+    }
+    .container {
+      background: #1f1f38;
+      padding: 40px 30px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    h2 {
+      margin: 0 0 30px 0;
+      font-weight: 500;
+      font-size: 2rem;
+      text-align: center;
+      letter-spacing: 1.2px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-group {
+      position: relative;
+      width: 100%;
+    }
+    input, select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2.5px solid #555;
+      color: #eee;
+      font-size: 1.1rem;
+      padding: 12px 5px 8px 5px;
+      transition: border-color 0.3s ease;
+      outline: none;
+      border-radius: 0;
+      cursor: pointer;
+    }
+    input:focus, select:focus {
+      border-bottom-color: #7fdbff;
+      box-shadow: 0 1px 5px #7fdbffaa;
+    }
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    select:focus + label,
+    select:not([value=""]) + label {
+      top: -18px;
+      font-size: 0.85rem;
+      color: #7fdbff;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    label {
+      position: absolute;
+      left: 5px;
+      top: 12px;
+      color: #aaa;
+      font-size: 1.1rem;
+      pointer-events: none;
+      transition: 0.3s ease all;
+      user-select: none;
+    }
+    button {
+      margin-top: 10px;
+      background: #7fdbff;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #1f1f38;
+      cursor: pointer;
+      box-shadow: 0 8px 20px #7fdbffaa;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+    button:hover {
+      background: #67c7ff;
+      box-shadow: 0 10px 30px #67c7ffcc;
+    }
+    button:active {
+      transform: scale(0.96);
+    }
+    .result {
+      margin-top: 25px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      color: #7fdbff;
+      min-height: 50px;
+      user-select: text;
+      letter-spacing: 0.03em;
+      background: rgba(127, 219, 255, 0.15);
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px #7fdbffaa;
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h2 {
+        font-size: 1.7rem;
+      }
+      button {
+        font-size: 1.05rem;
+        padding: 12px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Bike Rental Prediction Form">
+    <h2>Hourly Bike Rental Prediction</h2>
+    <form id="rentalForm" novalidate>
+
+      <div class="form-group">
+        <select id="season" name="season" required>
+          <option value="" hidden></option>
+          <option value="1">Spring</option>
+          <option value="2">Summer</option>
+          <option value="3">Fall</option>
+          <option value="4">Winter</option>
+        </select>
+        <label for="season">Season</label>
+      </div>
+
+      <div class="form-group">
+        <select id="yr" name="yr" required>
+          <option value="" hidden></option>
+          <option value="0">2011</option>
+          <option value="1">2012</option>
+        </select>
+        <label for="yr">Year</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="mnth" name="mnth" min="1" max="12" placeholder=" " required />
+        <label for="mnth">Month (1-12)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="day" name="day" min="1" max="31" placeholder=" " required />
+        <label for="day">Day (1-31)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="hr" name="hr" min="0" max="23" placeholder=" " required />
+        <label for="hr">Hour (0-23)</label>
+      </div>
+
+      <div class="form-group">
+        <select id="holiday" name="holiday" required>
+          <option value="" hidden></option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+        <label for="holiday">Holiday</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="weekday" name="weekday" min="0" max="6" placeholder=" " required />
+        <label for="weekday">Weekday (0=Sun, 6=Sat)</label>
+      </div>
+
+      <div class="form-group">
+        <select id="workingday" name="workingday" required>
+          <option value="" hidden></option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+        <label for="workingday">Working Day</label>
+      </div>
+
+      <div class="form-group">
+        <select id="weathersit" name="weathersit" required>
+          <option value="" hidden></option>
+          <option value="1">Clear, Few clouds</option>
+          <option value="2">Mist + Cloudy</option>
+          <option value="3">Light Snow, Rain</option>
+          <option value="4">Heavy Rain, Thunderstorm</option>
+        </select>
+        <label for="weathersit">Weather Situation</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="temp" name="temp" step="0.01" min="0" max="1" placeholder=" " required />
+        <label for="temp">Temperature (scaled 0-1)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="atemp" name="atemp" step="0.01" min="0" max="1" placeholder=" " required />
+        <label for="atemp">Feels Like Temperature (scaled 0-1)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="hum" name="hum" step="0.01" min="0" max="1" placeholder=" " required />
+        <label for="hum">Humidity (scaled 0-1)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="windspeed" name="windspeed" step="0.01" min="0" max="1" placeholder=" " required />
+        <label for="windspeed">Wind Speed (scaled 0-1)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="dayofweek" name="dayofweek" min="0" max="6" placeholder=" " required />
+        <label for="dayofweek">Day of Week (0=Sun, 6=Sat)</label>
+      </div>
+
+      <div class="form-group">
+        <select id="is_weekend" name="is_weekend" required>
+          <option value="" hidden></option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+        <label for="is_weekend">Is Weekend</label>
+      </div>
+
+      <button type="submit" aria-label="Predict bike rental count">Predict Rental Count</button>
+    </form>
+
+    <div class="result" id="result" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('rentalForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const data = {
+        season: Number(form.season.value),
+        yr: Number(form.yr.value),
+        mnth: Number(form.mnth.value),
+        day: Number(form.day.value),
+        hr: Number(form.hr.value),
+        holiday: Number(form.holiday.value),
+        weekday: Number(form.weekday.value),
+        workingday: Number(form.workingday.value),
+        weathersit: Number(form.weathersit.value),
+        temp: Number(form.temp.value),
+        atemp: Number(form.atemp.value),
+        hum: Number(form.hum.value),
+        windspeed: Number(form.windspeed.value),
+        dayofweek: Number(form.dayofweek.value),
+        is_weekend: Number(form.is_weekend.value)
+      };
+
+      try {
+        const response = await fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          resultDiv.textContent = `Estimated Rentals: ${result.prediction}`;
+        } else {
+          resultDiv.textContent = `Error: ${result.error}`;
+        }
+      } catch (error) {
+        resultDiv.textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
